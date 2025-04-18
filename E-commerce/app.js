@@ -100,87 +100,8 @@ async function searchCompletion(){
 
                 // cards creation inside it
                 for(let i=0;i<resultedArrays.length;i++){
-                    // image
-                    let cartDiv=document.createElement('div');
-                    cartDiv.classList.add('cart-display-children')
-                    contentPage.append(cartDiv);
-
-                    let imgContainer=document.createElement("div");
-                    imgContainer.classList.add("img-container");
-
-                    let img=document.createElement("img");
-                    img.setAttribute('src',resultedArrays[i].thumbnail)
-                    imgContainer.append(img)
-                    
-                    cartDiv.append(imgContainer)
-                    // image container ends
-
-                    // brandname
-                    let brandname=document.createElement("p");
-                    brandname.classList.add("cart-info-bName");
-                    brandname.innerText=resultedArrays[i].brand;
-                    cartDiv.append(brandname);
-
-                    // brandname ends
-
-                    // product Details start
-                    let p=document.createElement("p");
-                    p.classList.add("cart-info-p")
-                    p.innerText=resultedArrays[i].description.slice(0,70)+"..."
-                    cartDiv.append(p);
-                    // product Details ends
-
-                    // product and offer price starts
-                    let priceOfferDiv=document.createElement("div");
-                    priceOfferDiv.classList.add("price-offer-div");
-
-                    let price=document.createElement("p");
-                    price.classList.add("cart-info-price");
-                    price.innerText=`$ ${resultedArrays[i].price}  `;
-                    priceOfferDiv.append(price);
-
-                    let offer=document.createElement("p");
-                    offer.innerText=` ${resultedArrays[i].discountPercentage}%off`
-                    offer.classList.add("cart-info-offer");
-                    priceOfferDiv.append(offer);
-
-                    cartDiv.append(priceOfferDiv);
-
-
-                    // product price ends
-
-                    // rating badge
-                    let ratingBadge=document.createElement("div")
-                    ratingBadge.classList.add("rating-btn");
-                    // ratingBadge.classList.add("btn-success");
-                    ratingBadge.innerHTML=`<div>${resultedArrays[i].rating} <i class="fa-solid fa-star"></i></div>`
-                    
-                    cartDiv.append(ratingBadge);
-                    
-                    //end of rating badge
-
-                    // like button 
-                    let likeContainer=document.createElement("div");
-                    likeContainer.classList.add("like-container");
-                    let likeBtn=document.createElement("div");
-                    likeBtn.innerHTML=`<i class="fa-regular fa-heart"></i>`
-                    likeContainer.append(likeBtn);
-
-                    cartDiv.append(likeContainer);
-
-                    // end of like button
-
-                    // add to cart button
-                    let addCartBtn=document.createElement("button");
-                    addCartBtn.classList.add("btn");
-                    addCartBtn.classList.add("btn-dark");
-                    addCartBtn.classList.add("addto-cart-btn")
-                    addCartBtn.innerText="Add Cart";
-                    cartDiv.append(addCartBtn);
-                    // add to cart button end
-
-                    contentPage.append(cartDiv)
-
+                   
+                    cartCreation(resultedArrays,i,contentPage);
 
                 }
 
@@ -219,3 +140,127 @@ async function getDataForSearch(categoryName){
     return data.data.products;
     
 }
+
+
+// creation of the carts 
+function cartCreation(resultedArrays,i,contentPage){
+     // image
+     let cartDiv=document.createElement('div');
+     cartDiv.classList.add('cart-display-children')
+     contentPage.append(cartDiv);
+
+     let imgContainer=document.createElement("div");
+     imgContainer.classList.add("img-container");
+
+     let img=document.createElement("img");
+     img.setAttribute('src',resultedArrays[i].thumbnail)
+     imgContainer.append(img)
+     
+     cartDiv.append(imgContainer)
+     // image container ends
+
+     // brandname
+     let brandname=document.createElement("p");
+     brandname.classList.add("cart-info-bName");
+     brandname.innerText=resultedArrays[i].brand;
+     cartDiv.append(brandname);
+
+     // brandname ends
+
+     // product Details start
+     let p=document.createElement("p");
+     p.classList.add("cart-info-p")
+     p.innerText=resultedArrays[i].description.slice(0,70)+"..."
+     cartDiv.append(p);
+     // product Details ends
+
+     // product and offer price starts
+     let priceOfferDiv=document.createElement("div");
+     priceOfferDiv.classList.add("price-offer-div");
+
+     let price=document.createElement("p");
+     price.classList.add("cart-info-price");
+     price.innerText=`$ ${resultedArrays[i].price}  `;
+     priceOfferDiv.append(price);
+
+     let offer=document.createElement("p");
+     offer.innerText=` ${resultedArrays[i].discountPercentage}%off`
+     offer.classList.add("cart-info-offer");
+     priceOfferDiv.append(offer);
+
+     cartDiv.append(priceOfferDiv);
+
+
+     // product price ends
+
+     // rating badge
+     let ratingBadge=document.createElement("div")
+     ratingBadge.classList.add("rating-btn");
+     // ratingBadge.classList.add("btn-success");
+     ratingBadge.innerHTML=`<div>${resultedArrays[i].rating} <i class="fa-solid fa-star"></i></div>`
+     
+     cartDiv.append(ratingBadge);
+     
+     //end of rating badge
+
+     // like button 
+     let likeContainer=document.createElement("div");
+     likeContainer.classList.add("like-container");
+     let likeBtn=document.createElement("div");
+     likeBtn.innerHTML=`<i class="fa-regular fa-heart"></i>`
+     likeContainer.append(likeBtn);
+
+     cartDiv.append(likeContainer);
+
+     // end of like button
+
+     // add to cart button
+     let addCartBtn=document.createElement("button");
+     addCartBtn.classList.add("btn");
+     addCartBtn.classList.add("btn-dark");
+     addCartBtn.classList.add("addto-cart-btn");
+     addCartBtn.innerText="Add Cart";
+     cartDiv.append(addCartBtn);
+     // add to cart button end
+
+     contentPage.append(cartDiv);
+
+     cartDiv.addEventListener("click",displayProductPanel);
+
+}
+// end of cart cart card creation ends here
+
+function displayProductPanel(e){
+    if(e.target.classList.contains('cart-info-p')){
+        console.log("view");
+
+        // making the disalog viewing by cliking
+        let contentCotainer=document.querySelector("body");
+        let cartViewContainer=document.createElement("dialog");
+        cartViewContainer.classList.add("cart-view-container");
+        cartViewContainer.innerText=e.target.innerText;
+        contentCotainer.append(cartViewContainer);
+        cartViewContainer.show();
+        // making the disalog viewing by cliking ending
+
+
+        // close of view cart displaying
+        let closeCartViewContainer=document.createElement("div");
+        closeCartViewContainer.innerHTML=`<i class="fa-solid fa-xmark"></i>`
+        closeCartViewContainer.classList.add("close-cart-view")
+        cartViewContainer.append(closeCartViewContainer);
+        
+
+        // adding event to the container
+        closeCartViewContainer.addEventListener('click',()=>{
+            console.log("close");
+            cartViewContainer.close();
+            console.log(cartViewContainer);
+        })
+
+        // close of view cart displaying
+
+    }
+        
+
+ }
