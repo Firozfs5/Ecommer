@@ -167,6 +167,13 @@ function cartCreation(resultedArrays,i,contentPage){
 
      // brandname ends
 
+    // id of the product
+    let id=document.createElement("span");
+    id.innerText=resultedArrays[i].id;
+    id.style.opacity="0";
+    brandname.append(id);
+    // end of id
+
      // product Details start
      let p=document.createElement("p");
      p.classList.add("cart-info-p")
@@ -230,7 +237,18 @@ function cartCreation(resultedArrays,i,contentPage){
 }
 // end of cart cart card creation ends here
 
-function displayProductPanel(e){
+async function displayProductPanel(e){
+
+    async function getClickedProduct(){
+       let idNumber= e.target.parentElement.children[1].children[0].innerText;
+       let productData=(await axios.get(`https://dummyjson.com/products/${idNumber}`)).data;
+
+        console.log(productData)
+        return productData;
+    }
+
+    // getClickedProduct();
+
     if(e.target.classList.contains('cart-info-p')){
         console.log("view");
 
@@ -238,7 +256,7 @@ function displayProductPanel(e){
         let contentCotainer=document.querySelector("body");
         let cartViewContainer=document.createElement("dialog");
         cartViewContainer.classList.add("cart-view-container");
-        cartViewContainer.innerText=e.target.innerText;
+        // cartViewContainer.innerText=e.target.innerText;
         contentCotainer.append(cartViewContainer);
         cartViewContainer.show();
         // making the disalog viewing by cliking ending
@@ -260,7 +278,181 @@ function displayProductPanel(e){
 
         // close of view cart displaying
 
+        // adding a new div inside the cart container(dialog)
+            let cartViewLayout=document.createElement("div");
+            cartViewContainer.append(cartViewLayout);
+            cartViewLayout.classList.add('cart-view-layout');
+
+        //section 1 
+        let productViewSection=document.createElement("div");
+        //section 2
+        let productDetailsSection=document.createElement("div");
+
+        // productDetailsSection.classList.add("cart-view-layout-children");
+        // productViewSection.classList.add("cart-view-layout-children");
+
+        // productViewSection.style.backgroundColor="red";
+        // productDetailsSection.style.backgroundColor="yellow";
+
+        cartViewLayout.append(productViewSection);
+        cartViewLayout.append(productDetailsSection);
+
+        // end of the cartView
+
+        // section one design
+        productViewSection.classList.add("product-view-section");
+        let smallImgPreview=document.createElement("div");
+        let bigImgPreview=document.createElement("div");
+        let cartBuyBtns=document.createElement("div");
+
+        productViewSection.append(smallImgPreview);
+        productViewSection.append(bigImgPreview);
+        productViewSection.append(cartBuyBtns);
+
+        let bigImgTag=document.createElement("img");
+        bigImgTag.classList.add("big-img-tag")
+        bigImgPreview.append(bigImgTag);
+
+        // heart
+        let heartLogoContainer=document.createElement('span');
+        heartLogoContainer.innerHTML=`<i class="fa-regular fa-heart"></i>`
+        heartLogoContainer.classList.add("heart-logo");
+        productViewSection.append(heartLogoContainer);
+        console.log(heartLogoContainer.parentElement); // Should log productViewSection
+
+        // heart ends
+
+        //data retriewer
+        let productData=await getClickedProduct();
+
+        // big img preview
+        bigImgTag.src=(productData).images[0];
+        
+
+        //multiple img prview
+        smallImgPreview.classList.add("small-img-preview") 
+
+        let smallImgDiv=document.createElement('div');
+        smallImgDiv.classList.add("small-img-div");
+        smallImgPreview.append(smallImgDiv)
+
+        for(let i=0;i<productData.images.length;i++){
+            let smallImgTags=document.createElement("img");
+            smallImgTags.classList.add("small-img-tags")
+            smallImgTags.src=productData.images[i];
+            smallImgDiv.append(smallImgTags)
+
+            smallImgTags.addEventListener("click",(e)=>{
+                bigImgTag.src=e.target.src;
+            });
+        }
+
+
+        // buy and cart buttons
+        cartBuyBtns.classList.add("cart-buybtns")
+        let addCartBtn=document.createElement("button");
+        addCartBtn.innerHTML='<i class="fa-solid fa-cart-shopping"></i> Add Cart';
+        addCartBtn.classList.add("btn","btn-dark");
+
+
+        let buyBtn=document.createElement("button");
+        buyBtn.innerHTML='<i class="fa-solid fa-bolt"></i> Buy Now';
+        buyBtn.classList.add("btn","btn-primary");
+
+        cartBuyBtns.append(addCartBtn,buyBtn);
+        // end of buy and cart btns
+        
+
+        // end os section 1
+
+
+        // section 2 for the detrails showcase
+        productDetailsSection.classList.add("product-details-section");
+
+        let companyName=document.createElement("p");
+        companyName.innerText=productData.brand;
+        companyName.classList.add("company-name");
+        productDetailsSection.append(companyName);
+
+        let productName=document.createElement('span');
+        productName.innerText=productData.title;
+        productName.classList.add('product-name');
+        productDetailsSection.append(productName);
+
+        let tagContainer=document.createElement("div");
+        tagContainer.classList.add("tag-container");
+        productDetailsSection.append(tagContainer);
+
+        for(let i=0;i<productData.tags.length;i++){
+            let tagItems=document.createElement("span");
+            tagItems.classList.add("tag-items");
+            tagItems.innerText='#'+productData.tags[i];
+            tagContainer.append(tagItems);
+        }
+
+        let description=document.createElement("p");
+        description.classList.add("description");
+        description.innerText=productData.description;
+        productDetailsSection.append(description);
+
+        let ratingBadge=document.createElement("button");
+        ratingBadge.innerHTML=`<i class="fa-solid fa-star">&nbsp ${productData.rating}</i> `
+        ratingBadge.classList.add('badge', 'rounded-pill', 'text-bg-success','rating-badge');
+        productDetailsSection.append(ratingBadge);
+
+        let priceOfferContainer=document.createElement("div");
+        priceOfferContainer.classList.add('price-offer-container');
+        priceOfferContainer.innerText=`$${productData.price} `;
+        let spanOffer=document.createElement("span");
+        spanOffer.innerText=`${productData.discountPercentage}% off`
+        spanOffer.classList.add('span-offer');
+        priceOfferContainer.append(spanOffer);
+        productDetailsSection.append(priceOfferContainer);
+
+        let offersDesciption=document.createElement("div");
+        offersDesciption.classList.add('offer-description');
+
+        let offerSpell=document.createElement('h5');
+        offerSpell.innerText='Available Offers '
+        offersDesciption.append(offerSpell);
+        let offerItem1=document.createElement('p');
+        offerItem1.innerHTML=`<i class="fa-solid fa-certificate"></i> Bank Offer5% Unlimited Cashback on Flipkart Axis Bank Credit CardT&C`;
+        offerItem1.classList.add('offer-item');
+        offersDesciption.append(offerItem1);
+        let offerItem2=document.createElement('p');
+        offerItem2.innerHTML=`<i class="fa-solid fa-certificate"></i> Bank Offer10% off up to ₹1,000 on all Axis Bank Credit Card (incl. migrated ones) EMI Txns of ₹7,490 and aboveT&C`;
+        offerItem2.classList.add('offer-item');
+        offersDesciption.append(offerItem2);
+        let offerItem3=document.createElement('p');
+        offerItem3.innerHTML=`<i class="fa-solid fa-certificate"></i> Bank Offer10% off on BOBCARD EMI Transactions, up to ₹1,500 on orders of ₹5,000 and aboveT&C`;
+        offerItem3.classList.add('offer-item');
+        offersDesciption.append(offerItem3);
+        let offerItem4=document.createElement('p');
+        offerItem4.classList.add('offer-item');
+        offerItem4.innerHTML=`<i class="fa-solid fa-certificate"></i> No cost EMI ₹1,450/month. Standard EMI also availableView Plans`;
+        offersDesciption.append(offerItem4);
+        productDetailsSection.append(offersDesciption);
+
+        let warranty=document.createElement('p');
+        warranty.innerHTML=`<span> Warranty: </span>${productData.warrantyInformation}`;
+        warranty.classList.add('warranty-policy');
+        productDetailsSection.append(warranty);
+
+        let policy=document.createElement('p');
+        policy.innerHTML=`<span> Our Policy: </span>${productData.returnPolicy}`;
+        policy.classList.add('warranty-policy');
+        productDetailsSection.append(policy);
+
+        let shipment=document.createElement('p');
+        shipment.innerHTML=`<span> Shipment Details: </span>${productData.shippingInformation}`;
+        shipment.classList.add('shipment');
+        productDetailsSection.append(shipment);
+
+        // section 2 end os displaying data
+
     }
         
+
+
 
  }
