@@ -399,6 +399,11 @@ body{
     font-weight: 495;
     margin-bottom: 10px;
 }
+
+.cart-info-p:hover{
+    color: #60B5FF;
+}
+
 .price-offer-div{
     display: flex;
     margin-bottom: 10px;
@@ -469,3 +474,267 @@ body{
 }
 
 /* end of displaying searched carts result */
+
+/* view of card/product display */
+ .cart-view-container{
+    width: 100%;
+    height: 93vh;
+    /* background-color: aliceblue; */
+    border: 0 solid white;
+    padding: 6px;
+    border-radius: 12px;
+
+    
+
+    position: fixed;
+    top: 63px;
+
+ }
+
+
+
+ .close-cart-view{
+    width: 30px;
+    height: 30px;
+
+    position: absolute;
+    /* z-index: 99; */
+    right: 2px;
+    top: 10px;
+ }
+
+ .close-cart-view i{
+    font-size: 25px;
+    transition: font-size 0.1s ease-in;
+    /* z-index: 99; */
+
+ }
+
+ .close-cart-view i:hover{
+    font-size: 28px;
+ }
+
+ /* stoping sccroll of body when button is clicked */
+.stop-scroll{
+    overflow: hidden;
+}
+
+
+/* creating the div and panel into two sub parts */
+.cart-view-layout{
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+}
+
+.cart-view-layout-children{
+    border-radius: 12px ;
+ }
+/* end of the two panel creation */
+
+/* section1 design */
+.product-view-section{
+    display:grid;
+    grid-template-columns: 15% 85%;
+    grid-template-rows: 82% 18%;
+}
+
+.big-img-tag{
+    height: 547px;
+    width: 100%;
+    object-fit: contain;
+    background-color: whitesmoke;
+    
+}
+
+.heart-logo{
+    position: relative !important;
+    width: 35px;
+    height: 35px;
+    bottom:650px;
+    left: 550px;
+    /* background-color: pink; */
+}
+
+.heart-logo i{
+    font-size: 33px;
+    /* background-color: pink; */
+}
+
+.heart-logo i:hover{
+    font-size: 33px;
+    color: red;
+    /* background-color: pink; */
+}
+
+
+.small-img-preview{
+    background-color: #F7F7F7;
+    padding: 6px;
+    
+    /* justify-content: flex-start; */
+    
+}
+.small-img-div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+
+    
+    
+}
+.small-img-tags{
+   width:100% ;
+   height: 120px;
+   object-fit: contain;
+   background-color: #FBFBFB;
+   transition: all 0.2s ease;
+}
+
+.small-img-tags:hover{
+    transform: scale(1.15);
+    /* border: 1px solid #F7F7F7; */
+    border-radius: 4px;
+}
+
+.cart-buybtns{
+    grid-column:1/span 2 ;
+
+    background-color: whitesmoke;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.cart-buybtns button{
+    width: 250px;
+    height: 60px;
+    font-size: 25px !important;
+    /* padding: 25px; */
+    font-weight: 500;
+}
+
+/* end of section1 */
+
+/* start of section 2 */
+.product-details-section{
+    padding: 22px;
+    background-color: #F7F7F7;
+}
+.company-name{
+ font-size: 22px;
+ font-weight: 600;
+ margin: 0;
+ margin-bottom: 10px;
+}
+
+/* .tag-container{
+
+} */
+
+.product-name{
+    font-size: 19px;
+    font-weight: 450;
+
+}
+
+.tag-items{
+    display: inline-block;
+  /* background-color: #f0f4ff; */
+  color: grey;
+  font-size: 17px;
+  /* padding: 6px 6px; */
+  margin: 5px;
+  margin-left: 0;
+  font-weight: 500;
+  /* border: 1px solid #d0e1ff; */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tag-items:hover {
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+  }
+
+
+
+.description{
+    font-size: 18px;
+    font-weight: 400;
+    /* padding: 12px; */
+}  
+
+.rating-badge{
+    width: 90px;
+    height: 35px;
+    border: none;
+    border-radius: 12px !important;
+    
+}
+
+.rating-badge i{
+   font-size: 15px;
+}
+
+.price-offer-container{
+
+    font-size: 36px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.span-offer{
+    font-size: 18px;
+    font-weight: 500;
+    color: #878787;
+
+}
+
+.offer-description{
+    margin-top: 15px;
+}
+
+.offer-description .offer-item i{
+
+    color: green;
+}
+.warranty-policy{
+    font-size: 14spx;
+    margin-bottom: 0px;
+    font-weight: 400;
+}
+.warranty-policy span{
+    font-weight: 500;
+    font-size: larger;
+}
+
+.shipment{
+    font-size: 20px;
+    margin-top: 30px;
+    font-weight: 400;
+}
+
+.shipment span{
+    font-weight: 500;
+    font-size: larger;
+    color: green;
+}
+
+.scroll-toggle{
+    overflow: none;
+    background-color: red;
+}
+/* end of section 2 */
+
+/* view of card/product display end of design */
